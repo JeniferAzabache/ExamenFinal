@@ -11,7 +11,7 @@ namespace WebApplication.Controllers
     public class ClienteController : Controller
     {
         // GET: Cliente
-        public ActionResult Index()
+        public ActionResult ListaClientes()
         {
             try
             { 
