@@ -1,0 +1,244 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="BD_ExamenFinalModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="tbAtencionCliente">
+          <Key>
+            <PropertyRef Name="IdCliente" />
+            <PropertyRef Name="IdTipoAtencion" />
+          </Key>
+          <Property Name="IdCliente" Type="int" Nullable="false" />
+          <Property Name="IdTipoAtencion" Type="int" Nullable="false" />
+          <Property Name="FechaRegistro" Type="date" Nullable="false" />
+          <Property Name="Estado" Type="char" MaxLength="1" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbCliente">
+          <Key>
+            <PropertyRef Name="IdCliente" />
+          </Key>
+          <Property Name="IdCliente" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Apellido" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="NumDocumento" Type="int" Nullable="false" />
+          <Property Name="Estado" Type="char" MaxLength="1" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbTipoAtencion">
+          <Key>
+            <PropertyRef Name="IdTipoAtencion" />
+          </Key>
+          <Property Name="IdTipoAtencion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Detalle" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_dbo_tbAtencionCliente_dbo_tbCliente_IdCliente">
+          <End Role="tbCliente" Type="Self.tbCliente" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="tbAtencionCliente" Type="Self.tbAtencionCliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbCliente">
+              <PropertyRef Name="IdCliente" />
+            </Principal>
+            <Dependent Role="tbAtencionCliente">
+              <PropertyRef Name="IdCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_tbAtencionCliente_dbo_tbTipoAtencion_IdTipoAtencion">
+          <End Role="tbTipoAtencion" Type="Self.tbTipoAtencion" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="tbAtencionCliente" Type="Self.tbAtencionCliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbTipoAtencion">
+              <PropertyRef Name="IdTipoAtencion" />
+            </Principal>
+            <Dependent Role="tbAtencionCliente">
+              <PropertyRef Name="IdTipoAtencion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BD_ExamenFinalModelStoreContainer">
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbAtencionCliente" EntityType="Self.tbAtencionCliente" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbCliente" EntityType="Self.tbCliente" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbTipoAtencion" EntityType="Self.tbTipoAtencion" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_dbo_tbAtencionCliente_dbo_tbCliente_IdCliente" Association="Self.FK_dbo_tbAtencionCliente_dbo_tbCliente_IdCliente">
+            <End Role="tbCliente" EntitySet="tbCliente" />
+            <End Role="tbAtencionCliente" EntitySet="tbAtencionCliente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_tbAtencionCliente_dbo_tbTipoAtencion_IdTipoAtencion" Association="Self.FK_dbo_tbAtencionCliente_dbo_tbTipoAtencion_IdTipoAtencion">
+            <End Role="tbTipoAtencion" EntitySet="tbTipoAtencion" />
+            <End Role="tbAtencionCliente" EntitySet="tbAtencionCliente" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BD_ExamenFinalModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="tbAtencionCliente">
+          <Key>
+            <PropertyRef Name="IdCliente" />
+            <PropertyRef Name="IdTipoAtencion" />
+          </Key>
+          <Property Name="IdCliente" Type="Int32" Nullable="false" />
+          <Property Name="IdTipoAtencion" Type="Int32" Nullable="false" />
+          <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Estado" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="tbCliente" Relationship="Self.FK_dbo_tbAtencionCliente_dbo_tbCliente_IdCliente" FromRole="tbAtencionCliente" ToRole="tbCliente" />
+          <NavigationProperty Name="tbTipoAtencion" Relationship="Self.FK_dbo_tbAtencionCliente_dbo_tbTipoAtencion_IdTipoAtencion" FromRole="tbAtencionCliente" ToRole="tbTipoAtencion" />
+        </EntityType>
+        <EntityType Name="tbCliente">
+          <Key>
+            <PropertyRef Name="IdCliente" />
+          </Key>
+          <Property Name="IdCliente" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Apellido" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="NumDocumento" Type="Int32" Nullable="false" />
+          <Property Name="Estado" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="tbAtencionCliente" Relationship="Self.FK_dbo_tbAtencionCliente_dbo_tbCliente_IdCliente" FromRole="tbCliente" ToRole="tbAtencionCliente" />
+        </EntityType>
+        <EntityType Name="tbTipoAtencion">
+          <Key>
+            <PropertyRef Name="IdTipoAtencion" />
+          </Key>
+          <Property Name="IdTipoAtencion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Detalle" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="tbAtencionCliente" Relationship="Self.FK_dbo_tbAtencionCliente_dbo_tbTipoAtencion_IdTipoAtencion" FromRole="tbTipoAtencion" ToRole="tbAtencionCliente" />
+        </EntityType>
+        <Association Name="FK_dbo_tbAtencionCliente_dbo_tbCliente_IdCliente">
+          <End Role="tbCliente" Type="Self.tbCliente" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="tbAtencionCliente" Type="Self.tbAtencionCliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbCliente">
+              <PropertyRef Name="IdCliente" />
+            </Principal>
+            <Dependent Role="tbAtencionCliente">
+              <PropertyRef Name="IdCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_tbAtencionCliente_dbo_tbTipoAtencion_IdTipoAtencion">
+          <End Role="tbTipoAtencion" Type="Self.tbTipoAtencion" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="tbAtencionCliente" Type="Self.tbAtencionCliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbTipoAtencion">
+              <PropertyRef Name="IdTipoAtencion" />
+            </Principal>
+            <Dependent Role="tbAtencionCliente">
+              <PropertyRef Name="IdTipoAtencion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BD_ExamenFinalEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="tbAtencionCliente" EntityType="Self.tbAtencionCliente" />
+          <EntitySet Name="tbCliente" EntityType="Self.tbCliente" />
+          <EntitySet Name="tbTipoAtencion" EntityType="Self.tbTipoAtencion" />
+          <AssociationSet Name="FK_dbo_tbAtencionCliente_dbo_tbCliente_IdCliente" Association="Self.FK_dbo_tbAtencionCliente_dbo_tbCliente_IdCliente">
+            <End Role="tbCliente" EntitySet="tbCliente" />
+            <End Role="tbAtencionCliente" EntitySet="tbAtencionCliente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_tbAtencionCliente_dbo_tbTipoAtencion_IdTipoAtencion" Association="Self.FK_dbo_tbAtencionCliente_dbo_tbTipoAtencion_IdTipoAtencion">
+            <End Role="tbTipoAtencion" EntitySet="tbTipoAtencion" />
+            <End Role="tbAtencionCliente" EntitySet="tbAtencionCliente" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="BD_ExamenFinalModelStoreContainer" CdmEntityContainer="BD_ExamenFinalEntities">
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="BD_ExamenFinalModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbAtencionCliente">
+            <EntityTypeMapping TypeName="BD_ExamenFinalModel.tbAtencionCliente">
+              <MappingFragment StoreEntitySet="tbAtencionCliente">
+                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
+                <ScalarProperty Name="IdTipoAtencion" ColumnName="IdTipoAtencion" />
+                <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbCliente">
+            <EntityTypeMapping TypeName="BD_ExamenFinalModel.tbCliente">
+              <MappingFragment StoreEntitySet="tbCliente">
+                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Apellido" ColumnName="Apellido" />
+                <ScalarProperty Name="NumDocumento" ColumnName="NumDocumento" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbTipoAtencion">
+            <EntityTypeMapping TypeName="BD_ExamenFinalModel.tbTipoAtencion">
+              <MappingFragment StoreEntitySet="tbTipoAtencion">
+                <ScalarProperty Name="IdTipoAtencion" ColumnName="IdTipoAtencion" />
+                <ScalarProperty Name="Detalle" ColumnName="Detalle" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
