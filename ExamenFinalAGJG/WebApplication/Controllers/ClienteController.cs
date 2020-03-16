@@ -22,14 +22,48 @@ namespace WebApplication.Controllers
 
 
                     return View(listaClientes);
-                 }
+                }
             }
             catch (Exception)
             {
 
                 throw;
             }
+            //return View(listaClientes);
+        }
+        [HttpGet]
+        public ActionResult Agregar()
+        {
             return View();
         }
+
+        [HttpPost]
+        public ActionResult Agregar(tbCliente clien)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+
+            try
+            {
+                using (var db = new BD_ExamenFinalEntities())
+                {
+                    db.tbCliente.Add(clien);
+                    db.SaveChanges();
+                    return RedirectToAction("ListaClientes");
+                }
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("Error", ex.Message);
+                //throw;
+                return View();
+            }
+
+        }
+
+
+
     }
 }

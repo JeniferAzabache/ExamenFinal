@@ -11,6 +11,7 @@ namespace WebApplication.Models.BEAN
         public string Nombre { get; set; }
         public string Apellido  { get; set; }
         public int NumDocumento { get; set; }
+        public string Estado { get; set; }
 
     }
 }
