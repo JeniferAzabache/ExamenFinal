@@ -49,6 +49,7 @@ namespace WebApplication.Controllers
             {
                 using (var db = new BD_ExamenFinalEntities())
                 {
+                    clien.Estado = "A";
                     db.tbCliente.Add(clien);
                     db.SaveChanges();
                     return RedirectToAction("ListaClientes");
